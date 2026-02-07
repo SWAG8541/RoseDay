@@ -171,6 +171,12 @@ button {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
+@media (max-width: 600px) {
+  .slides {
+    animation-duration: 28s;
+  }
+}
+
 </style>
 </head>
 
@@ -238,8 +244,13 @@ setInterval(() => {
   setTimeout(() => petal.remove(), 15000);
 }, 700);
 
-/* TAP TO HEART */
+let lastTap = 0;
+
 document.addEventListener("click", e => {
+  const now = Date.now();
+  if (now - lastTap < 400) return; // throttle
+  lastTap = now;
+
   const heart = document.createElement("div");
   heart.className = "tap-heart";
   heart.innerHTML = "💖";
@@ -248,6 +259,7 @@ document.addEventListener("click", e => {
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 1500);
 });
+
 
 // remove toast after first interaction
 document.body.addEventListener("click", () => {
