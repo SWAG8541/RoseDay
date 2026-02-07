@@ -133,6 +133,30 @@ button {
   pointer-events: none;
 }
 
+/* tap hint toast */
+.tap-toast {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  z-index: 5;
+  animation: toastFade 4s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes toastFade {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
 @keyframes pop {
   0% { transform: scale(0); opacity: 1; }
   100% { transform: scale(2); opacity: 0; }
@@ -189,6 +213,11 @@ button {
   <div class="footer">
     Always yours,<br>— Suraj 💕
   </div>
+
+  <div class="tap-toast" id="tapToast">
+  💖 Tap anywhere
+</div>
+
 </div>
 
 <script>
@@ -219,6 +248,13 @@ document.addEventListener("click", e => {
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 1500);
 });
+
+// remove toast after first interaction
+document.body.addEventListener("click", () => {
+  const toast = document.getElementById("tapToast");
+  if (toast) toast.remove();
+}, { once: true });
+
 
 function showMessage() {
   document.getElementById("secret").style.display = "block";
